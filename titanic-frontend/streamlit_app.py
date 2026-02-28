@@ -7,7 +7,7 @@ import base64
 # --------------------------------------------------
 # Configuration
 # --------------------------------------------------
-API_URL = "https://titanic-dataset-chat-agent-2.onrender.com/chat" 
+API_URL = "https://titanic-dataset-chat-agent-2.onrender.com//chat" 
 
 st.set_page_config(
     page_title="Titanic Chat Agent 🚢",
