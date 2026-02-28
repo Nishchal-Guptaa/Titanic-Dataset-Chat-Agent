@@ -41,13 +41,11 @@ model = ChatGroq(
     temperature=0
 )
 
-
 # --------------------------------------------------
 # Load Titanic Dataset (Pandas)
 # --------------------------------------------------
-CSV_PATH = "Titanic-Dataset.csv"
+CSV_PATH = "titanic-backend/Titanic-Dataset.csv"
 df = pd.read_csv(CSV_PATH)
-
 
 # --------------------------------------------------
 # Vector Store Setup (for semantic retrieval)
