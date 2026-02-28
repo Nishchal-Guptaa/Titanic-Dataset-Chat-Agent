@@ -9,13 +9,10 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file into the container
+# Copy the requirements file into the container (from parent directory context)
 COPY requirements.txt .
 
-# Install PyTorch EXPLICITLY first (CPU version to save size and time)
-RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
-# Install dependencies
+# Install dependencies (requirements.txt already specifies CPU-only PyTorch)
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
