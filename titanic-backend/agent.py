@@ -44,8 +44,12 @@ model = ChatGroq(
 # --------------------------------------------------
 # Load Titanic Dataset (Pandas)
 # --------------------------------------------------
-CSV_PATH = "Titanic-Dataset.csv"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "Titanic-Dataset.csv")
+
 df = pd.read_csv(CSV_PATH)
+
 
 # --------------------------------------------------
 # Vector Store Setup (for semantic retrieval)
