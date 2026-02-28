@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from agent import run_agent
+from .agent import run_agent
 import os
 import uvicorn
 
@@ -69,6 +69,6 @@ def chat_endpoint(request: QueryRequest):
     }
 
 
-if __name__ == "__main__":
-    # port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+# if __name__ == "__main__":
+#     # port = int(os.environ.get("PORT", 8000))
+#     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
