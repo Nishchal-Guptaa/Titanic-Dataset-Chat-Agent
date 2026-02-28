@@ -32,7 +32,8 @@ os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "")
 
 model = ChatGroq(
     model="meta-llama/llama-4-scout-17b-16e-instruct",
-    temperature=0
+    temperature=0,
+    max_tokens=4096,
 )
 
 # --------------------------------------------------
