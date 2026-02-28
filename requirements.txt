@@ -10,7 +10,4 @@ chromadb<1.0
 pandas
 matplotlib
 seaborn
-sentence-transformers
 python-dotenv
---extra-index-url https://download.pytorch.org/whl/cpu
-torch
