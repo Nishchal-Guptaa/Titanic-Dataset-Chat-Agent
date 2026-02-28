@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
 # Copy the requirements file into the container
 COPY requirements.txt .
 
+# Install PyTorch EXPLICITLY first (CPU version to save size and time)
+RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
