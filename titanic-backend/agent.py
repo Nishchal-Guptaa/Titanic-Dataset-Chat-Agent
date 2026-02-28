@@ -44,7 +44,7 @@ model = ChatGroq(
 # --------------------------------------------------
 # Load Titanic Dataset (Pandas)
 # --------------------------------------------------
-CSV_PATH = "Titanic-Dataset.csv"
+CSV_PATH = "titanic-backend/Titanic-Dataset.csv"
 df = pd.read_csv(CSV_PATH)
 
 # --------------------------------------------------
