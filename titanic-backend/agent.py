@@ -128,10 +128,28 @@ def analyze_data(query: str):
     Uses intelligent pandas agent to answer statistical
     and visualization queries dynamically.
     """
+    import matplotlib.pyplot as plt
+    import base64
+    from io import BytesIO
+
+    # Close any pre-existing figures so we only capture new ones
+    plt.close("all")
+
     pandas_agent = _get_pandas_agent()
     response = pandas_agent.invoke(query)
 
-    return response["output"], None
+    # Capture any matplotlib figures the agent created
+    artifact = None
+    figures = [plt.figure(i) for i in plt.get_fignums()]
+    if figures:
+        buf = BytesIO()
+        figures[-1].savefig(buf, format="png", bbox_inches="tight", dpi=150)
+        buf.seek(0)
+        artifact = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+        plt.close("all")
+
+    return response["output"], artifact
 
 
 # --------------------------------------------------

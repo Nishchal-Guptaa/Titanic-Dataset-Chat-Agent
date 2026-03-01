@@ -108,9 +108,11 @@ def chat_endpoint(request: QueryRequest):
         if final_message:
             text_response = final_message.content
 
-            # If tool returned artifact, it will be inside additional_kwargs
-            if hasattr(final_message, "additional_kwargs"):
-                artifact = final_message.additional_kwargs.get("artifact")
+        # Scan messages in reverse for tool artifacts (base64 images)
+        for msg in reversed(messages):
+            if hasattr(msg, "artifact") and msg.artifact:
+                artifact = msg.artifact
+                break
 
         return {
             "text": text_response,
