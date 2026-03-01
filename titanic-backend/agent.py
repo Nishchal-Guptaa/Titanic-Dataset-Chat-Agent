@@ -98,6 +98,7 @@ def _get_pandas_agent():
             df,
             verbose=True,
             allow_dangerous_code=True,
+            handle_parsing_errors=True,
         )
     return _pandas_agent
 
