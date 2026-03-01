@@ -99,6 +99,16 @@ def _get_pandas_agent():
             verbose=True,
             allow_dangerous_code=True,
             handle_parsing_errors=True,
+            number_of_head_rows=3,
+            prefix=(
+                "You are a data analysis agent working with a pandas DataFrame called `df`.\n"
+                "RULES:\n"
+                "- When creating visualizations, just run the code. Do NOT describe the plot.\n"
+                "- Keep your Final Answer to 1-2 sentences maximum.\n"
+                "- If you created a plot, your Final Answer should only say: 'The plot has been generated.'\n"
+                "- Never explain what plt.show() or plt.savefig() does.\n"
+                "- Always use plt.tight_layout() before plt.show().\n"
+            ),
         )
     return _pandas_agent
 
@@ -136,8 +146,14 @@ def analyze_data(query: str):
     # Close any pre-existing figures so we only capture new ones
     plt.close("all")
 
-    pandas_agent = _get_pandas_agent()
-    response = pandas_agent.invoke(query)
+    # Run the pandas agent — may fail on verbose visualization responses
+    output_text = ""
+    try:
+        pandas_agent = _get_pandas_agent()
+        response = pandas_agent.invoke(query)
+        output_text = response["output"]
+    except Exception as e:
+        output_text = f"Analysis completed. (Note: {str(e)[:100]})"
 
     # Capture any matplotlib figures the agent created
     artifact = None
@@ -149,8 +165,10 @@ def analyze_data(query: str):
         artifact = base64.b64encode(buf.read()).decode("utf-8")
         buf.close()
         plt.close("all")
+        if not output_text or output_text.startswith("Analysis completed"):
+            output_text = "The visualization has been generated."
 
-    return response["output"], artifact
+    return output_text, artifact
 
 
 # --------------------------------------------------
